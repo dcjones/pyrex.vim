@@ -1,11 +1,15 @@
 " Vim syntax file
-" Language:	Pyrex/Cython
-" Maintainer:	Marco Barisione <marco.bari@people.it>
-" URL:		http://marcobari.altervista.org/pyrex_vim.html
-" Last Change:	2008 April 8
+" Language:    Pyrex/Cython
+" Maintainer:    Marco Barisione <marco.bari@people.it>
+" URL:        http://marcobari.altervista.org/pyrex_vim.html
+" Last Change:    2010 April 02
 
 " 2008-04-08 - Updated to support Cython (http://www.cython.org/)
 "               by Greg A. Jandl (greg.jandl@gmail.com)
+"
+" 2011-04-02 - Minor corrections and updates.
+"               (Daniel C. Jones <dcjones@cs.washington.edu>) 
+"
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
@@ -24,16 +28,17 @@ else
 endif
 
 " Pyrex extentions
-syn keyword pyrexStatement      cdef typedef ctypedef sizeof
-syn keyword pyrexType		int long short float double char object void
-syn keyword pyrexType		signed unsigned
-syn keyword pyrexStructure	struct union enum
-syn keyword pyrexPrecondit	include cimport
-syn keyword pyrexAccess		public private property readonly extern
+syn keyword pyrexStatement    cdef typedef ctypedef sizeof
+syn keyword pyrexType         Py_ssize_t size_t bint int long short float double char object void
+syn keyword pyrexType         signed unsigned
+syn keyword pyrexStructure    cppclass struct union enum
+syn keyword pyrexPrecondit    include cimport
+syn keyword pyrexAccess       public private property readonly extern gil nogil
+syn keyword pyrexPreproc      IF ELIF ELSE DEF
 " If someome wants Python's built-ins highlighted probably he
 " also wants Pyrex's built-ins highlighted
 if exists("python_highlight_builtins") || exists("pyrex_highlight_builtins")
-    syn keyword pyrexBuiltin    NULL
+    syn keyword pyrexBuiltin  NULL
 endif
 
 " This deletes "from" from the keywords and re-adds it as a
@@ -54,15 +59,16 @@ if version >= 508 || !exists("did_pyrex_syntax_inits")
   else
     command -nargs=+ HiLink hi def link <args>
   endif
-  HiLink pyrexStatement		Statement
-  HiLink pyrexType		Type
-  HiLink pyrexStructure		Structure
-  HiLink pyrexPrecondit		PreCondit
-  HiLink pyrexAccess		pyrexStatement
+  HiLink pyrexStatement   Statement
+  HiLink pyrexType        Type
+  HiLink pyrexStructure   Structure
+  HiLink pyrexPrecondit   PreCondit
+  HiLink pyrexAccess      pyrexStatement
   if exists("python_highlight_builtins") || exists("pyrex_highlight_builtins")
-      HiLink pyrexBuiltin	Function
+      HiLink pyrexBuiltin    Function
   endif
-  HiLink pyrexForFrom		Statement
+  HiLink pyrexForFrom     Statement
+  HiLink pyrexPreproc     Define
 
   delcommand HiLink
 endif
